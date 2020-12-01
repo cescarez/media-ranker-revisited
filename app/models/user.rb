@@ -8,10 +8,12 @@ class User < ApplicationRecord
 
   def self.build_from_github(auth_hash)
     user = User.new
-    user.uid = auth_hash["uid"]
+    user.uid = auth_hash["raw_info"]["id"].to_s
     user.provider = 'github'
-    user.username = auth_hash["info"]["name"]
-    user.email = auth_hash["info"]["email"]
+    user.username = auth_hash["raw_info"]["login"]
+    user.email = auth_hash["raw_info"]["email"]
     return user
   end
 end
+
+
